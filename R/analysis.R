@@ -1,6 +1,6 @@
-setwd("~/Documents/reports/stocks/")
+#setwd("~/Documents/reports/stocks/")
 
-data <- read.csv("https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/data_2.csv")
+#data <- read.csv("https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/data_2.csv")
 
 summary(data)
 
@@ -64,3 +64,67 @@ styler::style_file("analysis.R")
 
 
 download.file("https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/data_2.csv",destfile = "./input/data_2.csv",method = "curl")
+
+
+library(tidyverse)
+library(readxl)
+# data <- read_excel("data.xlsx", sheet = "sheetNameOrNumber")
+# data <- read_excel("data.xlsx", na = "-")
+
+
+#data <- read_excel("data.xlsx", col_types = c("date", "skip", "guess", "numeric"))
+
+
+data <- read_excel("input/data.xlsx", na = "NA")
+
+# source the function
+
+source(file = "R/functions.R")
+
+cacl_mean_bill("Torgersen")
+cacl_mean_bill("Biscoe")
+cacl_mean_bill("Dream")
+
+
+# Use the function in functions.R
+
+create_scatterplot(data,"Adelie","Torgersen")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
