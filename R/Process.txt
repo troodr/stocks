@@ -1,0 +1,25 @@
+# Clean your code
+  # Create a function
+  # Organize project
+  #download.file("https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/data_2.csv",destfile = "./input/data_2.csv",method = "curl")
+
+
+# Make it a report
+  # reproducible report
+  # code
+  # explanation
+  # result
+  # graphs
+  
+# Interactivity
+  # Create a theme
+  # Interactive Charts
+
+# Quarto to Github Website
+
+
+library(styler)
+styler::style_file("analysis.R")
+
+data <- read_excel("input/data.xlsx", na = "NA")
+source(file = "R/functions.R")
