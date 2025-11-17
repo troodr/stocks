@@ -1,3 +1,13 @@
+## Source - https://stackoverflow.com/questions/15240815/git-fatal-the-remote-end-hung-up-unexpectedly/64565533
+# Posted by niksmac, modified by community. See post 'Timeline' for change history
+# Retrieved 2025-11-17, License - CC BY-SA 4.0
+
+#git config --global http.postBuffer 524288000
+# git config --global http.postBuffer 1048576000
+# git config --global http.lowSpeedLimit 0
+# git config --global http.lowSpeedTime 999999
+
+
 #setwd("~/Documents/reports/stocks/")
 
 #data <- read.csv("https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/data_2.csv")

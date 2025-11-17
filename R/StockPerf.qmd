@@ -1,6 +1,9 @@
 ---
 title: "Stocks"
-format: html
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show the code"
 editor: visual
 ---
 
@@ -17,6 +20,7 @@ The `code` requires **daily_data.csv** file which contains __ohclv__:
 ```{r}
 #| echo: false
 #| warning: false
+#| message: false
 # load libraries
 library(tidyverse)
 library(reactablefmtr)
@@ -27,12 +31,13 @@ library(glue)
 
 ```
 
-You can add options to executable code like this
+## Read the data
 
 
 ```{r}
 #| echo: false
 #| warning: false
+#| message: false
 #import data
 df_sp <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-07/big_tech_stock_prices.csv')
 df_comp <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-07/big_tech_companies.csv')
@@ -40,20 +45,25 @@ df_comp <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+#### The `echo: false` option disables the printing of code (only output is displayed).
 
 
 ```{r}
 #| echo: false
 #| warning: false
+#| message: false
 # clean data
 #change IBM company name to short form
 df_comp <- df_comp|>mutate(company = case_when(stock_symbol=="IBM" ~ "IBM Corporation", TRUE ~ company))
 ```
 
+
+### Clean the data
+
 ```{r}
-#| echo: false
+
 #| warning: false
+#| message: false
 #look at the most recent date of stock values per company
 sp_last_date = df_sp|>
   group_by(stock_symbol)|>
@@ -74,10 +84,12 @@ df_last_sp <- df_sp|>
   rename(last=close)
 ```
 
+#### Aggregate the data
 
 ```{r}
-#| echo: false
+
 #| warning: false
+#| message: false
 #aggregate by company list of stock prices past month
 df_trend_1m <- df_sp|>
   filter(date <= last_date & date >= date_1m)|>
@@ -98,9 +110,13 @@ df_trend_1y <- df_sp|>
   summarise(trend_1y = list(close))
 ```
 
+
+
+#### Get the performance metrics
 ```{r}
-#| echo: false
+
 #| warning: false
+#| message: false
 #get the stock prices per company 1 month ago, 6 months ago, and 1 year ago
 df_values <- df_sp|>
   filter(date %in% c(date_1m, date_6m, date_1y))|>
@@ -111,10 +127,11 @@ df_values <- df_sp|>
 
 ```
 
-
+#### Join the aggregate data to stock table
 ```{r}
-#| echo: false
+#| include: true
 #| warning: false
+#| message: false
 df_table<- df_last_sp|>
   #combine and merge all data sets - values & trends
   left_join(df_values, by="stock_symbol")|>
@@ -134,10 +151,11 @@ df_table<- df_last_sp|>
   select(stock_symbol, last, delta_1m, comp_1m, trend_1m, delta_6m, comp_6m, trend_6m, delta_1y, comp_1y, trend_1y)
 ```
 
-
+#### Reatable created
 ```{r}
-#| echo: false
+#| include: true
 #| warning: false
+#| message: false
 #base url for where logo images are hosted
 base_url = "https://raw.githubusercontent.com/rahul-c1/TidyTuesday/master/2023/W6/logos/"
 
@@ -287,4 +305,10 @@ reactable(data=df_table,
     , style='width:1000px;border-top-style:solid;border-color:#f2f2f2;')
     )
   )
+```
+
+
+```{r}
+#| include: false
+citation("tidyverse")
 ```
