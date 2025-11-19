@@ -5,6 +5,7 @@ format:
     code-fold: true
     code-summary: "Show the code"
 editor: visual
+fig-cap-location: margin
 ---
 
 ## StockPerf
@@ -307,7 +308,23 @@ reactable(data=df_table,
   )
 ```
 
+```{r}
+#| layout-ncol: 2
 
+df_sp %>% 
+  group_by(stock_symbol) %>% 
+  summarise(avg_price = mean(adj_close,na.rm=TRUE))
+
+```
+
+```{r, warning=FALSE,fig.height=3,fig.width=9,fig.cap="Average Price for each symbol"}
+p1 <- create_scatterplot(data,"Adelie","#6689c6")
+p2 <- create_scatterplot(data,"Chinstrap","#e85252")
+p3 <- create_scatterplot(data,"Gentoo","#9a6fb0")
+library(patchwork)
+library(hrbrthemse) # remotes::install_git("https://codeberg.org/hrbrmstr/hrbrthemes.git")
+p1+p2+p3
+```
 ```{r}
 #| include: false
 citation("tidyverse")
